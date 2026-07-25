@@ -1,34 +1,53 @@
 package com.autoatendimento.auth.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String nomeCompleto;
+
+    @Column(unique = true, nullable = false, length = 11)
+    private String cpf; // CPF Global Único (apenas números para validação)
+
     @Column(unique = true, nullable = false)
-    private String login;
+    private String login; // O e-mail único global usado para acessar o painel
 
     @Column(nullable = false)
     private String senha;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PerfilUsuario perfil; // FUNCIONARIO, ADMIN, CLIENTE
+    private LocalDateTime dataCadastro = LocalDateTime.now();
 
-    private String nomeCompleto;
-
-	
-    // Getters e Setters
-    public Long getId() {
+	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getNomeCompleto() {
+		return nomeCompleto;
+	}
+
+	public void setNomeCompleto(String nomeCompleto) {
+		this.nomeCompleto = nomeCompleto;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getLogin() {
@@ -46,21 +65,15 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
-	public PerfilUsuario getPerfil() {
-		return perfil;
+
+	public LocalDateTime getDataCadastro() {
+		return dataCadastro;
 	}
 
-	public void setPerfil(PerfilUsuario perfil) {
-		this.perfil = perfil;
+	public void setDataCadastro(LocalDateTime dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
-	public String getNomeCompleto() {
-		return nomeCompleto;
-	}
-
-	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
-	}
-   
+    // Getters e Setters
+    
 }
