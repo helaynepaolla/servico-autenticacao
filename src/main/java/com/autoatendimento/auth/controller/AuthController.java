@@ -37,4 +37,11 @@ public class AuthController {
         boolean valido = service.validarToken(token);
         return ResponseEntity.ok(valido);
     }
+    
+    @PostMapping("/vinculos")
+    public ResponseEntity<Void> criarVinculo(@RequestBody @Valid VinculoCadastroDTO dto) {
+        service.criarVinculo(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
 }

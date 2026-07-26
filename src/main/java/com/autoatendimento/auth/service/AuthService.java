@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.autoatendimento.auth.dto.CriarCredencialDTO;
 import com.autoatendimento.auth.dto.LoginDTO;
 import com.autoatendimento.auth.dto.TokenDTO;
+import com.autoatendimento.auth.dto.VinculoCadastroDTO;
 import com.autoatendimento.auth.entity.Usuario;
 import com.autoatendimento.auth.entity.VinculoUsuarioEmpresa;
 import com.autoatendimento.auth.repository.UsuarioRepository;
@@ -122,4 +123,21 @@ public class AuthService {
             return false;
         }
     }
+    
+    @org.springframework.transaction.annotation.Transactional
+    public void criarVinculo(VinculoCadastroDTO dto) {
+        // 1. Busca o usuário global dono do acesso
+        Usuario usuario = repo.findById(dto.getUsuarioId())
+                .orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Usuário global não encontrado para vinculação."));
+
+        // 2. Cria o registro na tabela intermediária Multi-Tenant
+        VinculoUsuarioEmpresa vinculo = new VinculoUsuarioEmpresa();
+        vinculo.setUsuario(usuario);
+        vinculo.setEmpresaId(dto.getEmpresaId());
+        vinculo.setPerfil(dto.getPerfil());
+
+        vinculoRepo.save(vinculo);
+    }
+
 }
