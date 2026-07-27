@@ -1,5 +1,8 @@
 package com.autoatendimento.auth.dto;
 
+import java.time.LocalDate;
+
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -17,7 +20,10 @@ public class CriarCredencialDTO {
     @NotBlank(message = "CPF é obrigatório")
     @Size(min = 11, max = 11, message = "O CPF deve conter exatamente 11 dígitos")
     private String cpf; // Novo campo obrigatório para o Marketplace global
-
+    
+    @Column(nullable = false)
+    private LocalDate dataNascimento;
+    
     // Getters e Setters
     public String getLogin() { return login; }
     public void setLogin(String login) { this.login = login; }
@@ -27,4 +33,12 @@ public class CriarCredencialDTO {
     public void setNomeCompleto(String nomeCompleto) { this.nomeCompleto = nomeCompleto; }
     public String getCpf() { return cpf; }
     public void setCpf(String cpf) { this.cpf = cpf; }
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+
 }

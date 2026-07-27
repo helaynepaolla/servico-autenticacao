@@ -1,6 +1,8 @@
 package com.autoatendimento.auth.entity;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,7 +18,10 @@ public class Usuario {
 
     @Column(unique = true, nullable = false, length = 11)
     private String cpf; // CPF Global Único (apenas números para validação)
-
+    
+    @Column(nullable = false)
+    private LocalDate dataNascimento;
+    
     @Column(unique = true, nullable = false)
     private String login; // O e-mail único global usado para acessar o painel
 
@@ -73,6 +78,16 @@ public class Usuario {
 	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+	
+	
 
     // Getters e Setters
     
